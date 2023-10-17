@@ -4,8 +4,11 @@ FROM golang:1.21-alpine
 # Set the working directory to /app
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Copy the main.go file from /cmd/api to /app in the container
+COPY ./cmd/api/main.go /app
+COPY ./go.mod /app
+COPY ./go.sum /app
+COPY . .
 
 # Build the Go app
 RUN apk add --no-cache git \
@@ -13,8 +16,6 @@ RUN apk add --no-cache git \
     && go install -v \
     && go build -o /deres
 
-# Expose port 8080 for the container
 EXPOSE 8080
 
-# Run the Go app when the container starts
-CMD ["/deres"]
+ENTRYPOINT ["/deres"]

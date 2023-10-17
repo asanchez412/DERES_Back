@@ -14,7 +14,6 @@ type Router interface {
 
 type router struct {
 	r  *gin.Engine
-	rg *gin.RouterGroup
 	db *sql.DB
 }
 
@@ -23,13 +22,7 @@ func NewRouter(r *gin.Engine, db *sql.DB) Router {
 }
 
 func (r *router) MapRoutes() {
-	r.setGroup()
-
 	r.buildRoutes()
-}
-
-func (r *router) setGroup() {
-	r.rg = r.r.Group("/api/v1")
 }
 
 func (r *router) buildRoutes() {
@@ -37,6 +30,6 @@ func (r *router) buildRoutes() {
 	userRepo := user.NewRepository(r.db)
 	userService := user.NewService(userRepo)
 	userHandler := handler.NewUserHandler(userService)
-	r.rg.GET("/users/login", userHandler.Login())
-	r.rg.POST("/users/signup", userHandler.SignUp())
+	r.r.GET("/users/login", userHandler.Login())
+	r.r.POST("/users/signup", userHandler.SignUp())
 }

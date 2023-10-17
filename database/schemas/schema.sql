@@ -7,6 +7,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`user_name`)
 );
 
-INSERT INTO `user` (`user_name`, `password`) VALUES
+INSERT INTO `users` (`user_name`, `password`) VALUES
 ('admin', 'admin'),
 ('user', 'user');
