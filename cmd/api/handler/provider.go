@@ -9,10 +9,6 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-type getProviderRequest struct {
-	Name string `json:"name" binding:"required"`
-}
-
 type createProviderRequest struct {
 	Name string `json:"name" binding:"required"`
 }
@@ -29,18 +25,13 @@ func NewProviderHandler(s provider.Service) *ProviderHandler {
 
 func (h *ProviderHandler) Get() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var req getProviderRequest
-		if err := c.ShouldBindJSON(&req); err != nil {
-			var ve validator.ValidationErrors
-			if errors.As(err, &ve) {
-				web.Error(c, 422, "%v", err.Error())
-				return
-			}
-			web.Error(c, 400, "%v", err.Error())
+		param, ok := c.Params.Get("name")
+		if !ok {
+			web.Error(c, 400, "missing param name")
 			return
 		}
 
-		provider, err := h.providerService.Get(c, req.Name)
+		provider, err := h.providerService.Get(c, param)
 		if err != nil {
 			web.Error(c, 404, "%v", err.Error())
 			return

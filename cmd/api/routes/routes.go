@@ -4,6 +4,7 @@ import (
 	"database/sql"
 
 	"github.com/andsanchez/DERES_Back/cmd/api/handler"
+	"github.com/andsanchez/DERES_Back/internal/provider"
 	"github.com/andsanchez/DERES_Back/internal/user"
 	"github.com/gin-gonic/gin"
 )
@@ -30,6 +31,11 @@ func (r *router) buildRoutes() {
 	userRepo := user.NewRepository(r.db)
 	userService := user.NewService(userRepo)
 	userHandler := handler.NewUserHandler(userService)
-	r.r.GET("/users/login", userHandler.Login())
+	r.r.POST("/users/login", userHandler.Login())
 	r.r.POST("/users/signup", userHandler.SignUp())
+	providerRepo := provider.NewRepository()
+	providerService := provider.NewService(providerRepo)
+	providerHandler := handler.NewProviderHandler(providerService)
+	r.r.GET("/provider", providerHandler.Get())
+	r.r.POST("/provider", providerHandler.Create())
 }
