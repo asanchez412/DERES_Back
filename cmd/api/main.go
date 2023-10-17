@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/andsanchez/DERES_Back/cmd/api/handler/routes"
+	"github.com/andsanchez/DERES_Back/cmd/api/routes"
 	"github.com/andsanchez/DERES_Back/db"
 	"github.com/gin-gonic/gin"
 )

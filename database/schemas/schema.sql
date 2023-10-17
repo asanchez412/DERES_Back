@@ -6,7 +6,3 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(63) NOT NULL,
   PRIMARY KEY (`user_name`)
 );
-
-INSERT INTO `users` (`user_name`, `password`) VALUES
-('admin', 'admin'),
-('user', 'user');
