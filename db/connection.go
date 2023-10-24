@@ -10,7 +10,7 @@ import (
 func Connect() (*sql.DB, error) {
 	dbUser := "root"
 	dbPass := "root"
-	dbHost := "localhost"
+	dbHost := "mysql"
 	dbPort := "3306"
 	dbName := "deres"
 	dataSource := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPass, dbHost, dbPort, dbName)
